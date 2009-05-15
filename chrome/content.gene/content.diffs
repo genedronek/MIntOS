@@ -1,0 +1,163 @@
+Only in content: .DS_Store
+diff -r content.orig/fileio.js content/fileio.js
+10a11
+> 	//alert("openFile " + path + " returns " + file);
+15c16,21
+< 	file.create(0x00, 0664);
+---
+> 	try {
+> 		file.create(0x00, 0664);
+> 	}
+> 	catch (e) {
+> 		alert("createFile "+ file + " returned " + e);
+> 	}
+diff -r content.orig/log.js content/log.js
+11a12
+> 		//alert("logfile open returned " + logfile );
+19a21
+> 	//alert("logline " + txt);
+21a24
+> 		//alert("logfile open 2returned " + logfile );
+25c28,29
+< 	fos.write (txt, txt.length);
+---
+> 	var ret = fos.write (txt, txt.length);
+> 	//alert("fos.write returns " + ret);
+27a32
+> 	dump(9999);
+32a38,39
+> 		//alert("logfile open 3returned " + logfile );
+> 		
+diff -r content.orig/main.js content/main.js
+7,9c7,11
+< const STATE_FILE = "d:\\cygwin\\home\\zhou\\extensions\\myextension\\chrome\\content\\sdb.txt";
+< const TRAIL_FILE = "d:\\cygwin\\home\\zhou\\extensions\\myextension\\chrome\\content\\tdb.txt";
+< const LOG_FILE = "d:\\cygwin\\home\\zhou\\extensions\\myextension\\chrome\\content\\ldb.txt";
+---
+> var path = "d:\\cygwin\\home\\zhou\\extensions\\myextension\\chrome\\content\\";
+> var path = "/Users/gene/Desktop/Moz/";
+> const STATE_FILE = path + "sdb.txt";
+> const TRAIL_FILE = path + "tdb.txt";
+> const LOG_FILE   = path + "ldb.txt";
+412a415
+> 	//(txt);
+444c447
+<     debugMessage ("[procLoad]" + ex.message);
+---
+>     debugMessage ("[procLoad catch]" + ex.message);
+445a449
+> debugMessage ("[procLoad] return" );
+477d480
+< 
+diff -r content.orig/sample.xul content/sample.xul
+2c2,8
+< <overlay id="sample" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+---
+> <overlay id="sample" 
+> 					 xmlns:html="http://www.w3c.org/1999/xhtml"
+> 					xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" >
+> 					
+> 	<!--  main.js defines global constants for files that follow -->
+> 	<script type="application/x-javascript" src="chrome://sample/content/main.js"/>
+> 
+12,13c18,42
+<   <script type="application/x-javascript" src="chrome://sample/content/urlsubmit.js"/>
+<  	<script type="application/x-javascript" src="chrome://sample/content/main.js"/>
+---
+>     <script type="application/x-javascript" src="chrome://sample/content/urlsubmit.js"/>
+> 
+> 	<!--  scroller test framework -->
+>  	<script type="application/x-javascript" src="chrome://sample/content/scroller/js/jquery.js"/>
+>  	<script type="application/x-javascript" src="chrome://sample/content/scroller/js/utils.js"/>
+>  	<script type="application/x-javascript" src="chrome://sample/content/scroller/js/dom.js"/>
+>  	<script type="application/x-javascript" src="chrome://sample/content/scroller/15scroller.js"/>
+> 
+> 	<!-- I know this inline stuff is ugly, but it is really handy.  -->
+> 	<script >
+> 				function genericClickHandler(e) 
+> 				{ 
+> 					// at this point, this=chromeWindow, e=XULElement
+> 					alert(this + e.id );
+> 					var ele = e;
+> 					var attr = "width";
+> 					var val = parseInt( ele.getAttribute(attr) );
+> 					//alert(attr + " = " + val );
+> 					
+> 					//ele.setAttribute(attr, val-10);
+> 					//ele.setAttribute("style","border: 1px solid blue; background: green;" );
+> 					//ele.label = ele.id;  does not work
+> 					//ele.image = "chrome://sample/content/scroller/i/onoff.on.png"; does not work
+> 				}
+> 	</script>
+14a44
+> 	<!--  we are extending the status bar -->
+15a46
+> 
+17c48
+< 		<statusbarpanel id="urlTemplate" label="URLTemplate"/>
+---
+> 		<statusbarpanel id="urlTemplate" label="URLTemplate"/>                                                                                                                                                                                                                                             
+20c51,62
+< 	  	<!--button id="okbutton" label="OK"/-->
+---
+> 		
+> 		<!--  the following is but a single element, that pops up and grows a mini-window -->
+> 	  	<button id="xstatusPanel" label="Click Me" style='color:red;' popup="popsicle" 
+> 						onclick='setInterval( 
+> 							function () 
+> 							{ 
+> 								var v = document.getElementById("popsicle");
+> 								var l = parseInt( v.getAttribute("height") );
+> 								/*alert("height =" + l);*/
+> 								v.setAttribute("height", l+1);
+> 							}, 20 )' 
+> 				 />
+21a64,93
+> 		<!--  test case for stacking several image layers -->
+> 		<label >
+> 			xx
+> 			<stack id="stack">
+> 			<image id="onoff" src="chrome://sample/content/scroller/i/onoff.on.png" top="-30" />
+> 			<image src="chrome://sample/content/scroller/i/arrows.leftright.png" />
+> 			<label>non-clickable stack</label>
+> 			</stack>
+> 			yy
+> 		</label>
+> 
+> 		<!-- This seems to be the most promising approach -->
+> 		<statusbarpanel id="scroll5" style="background: lightgreen;
+> 											border: 1px dotted blue;" 
+> 											onclick='genericClickHandler(this)' label="s5" />
+> 		<statusbarpanel id="scroll4" style="background: lightgreen;
+> 											border: 1px dotted blue;" 
+> 											onclick='genericClickHandler(this)' label="s4" />
+> 		<statusbarpanel id="scroll3" style="background: lightgreen;
+> 											border: 1px dotted blue;" 
+> 											onclick='genericClickHandler(this)' label="s3" />
+> 		<statusbarpanel id="scroll2" style="background: lightgreen;
+> 											border: 1px dotted blue;" 
+> 											onclick='genericClickHandler(this)' label="s2" />
+> 		<statusbarpanel id="scroll1" style="background: lightgreen;
+> 											border: 1px dotted blue;" 
+> 											onclick='genericClickHandler(this)' label="s1" />
+> 		<statusbarpanel id="scroll0" style="background: lightgreen;
+> 											border: 1px dotted blue;" 
+> 											onclick='genericClickHandler(this)' label="s0" />
+22a95,103
+> 
+> 	<!--  the popup window height will be increased programmatically if you click on it -->
+> 	<popupset>
+> 	  <panel id="popsicle" position="before_start" height="1" width="300"  >
+> 	<label height="1" >lkjljk</label>
+> 	  </panel>
+> 	</popupset>
+> 
+> 
+23a105
+> 
+Only in content: scroller
+diff -r content.orig/trailman.js content/trailman.js
+65c65
+< 		showStatus ("[addEvent] " + ex.message);
+---
+> 		showStatus ("catch[addEvent] " + ex.message);

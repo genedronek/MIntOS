@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+
+<overlay id="Brain" 
+         xmlns:html="http://www.w3c.org/1999/xhtml"
+		      xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" >
+			  					
+<!--  main.js defines global constants for files that follow -->
+<script type="application/x-javascript" src="chrome://sample/content/main.js"/>
+
+<script type="application/x-javascript" src="chrome://sample/content/log.js"/>
+<script type="application/x-javascript" src="chrome://sample/content/stateman.js"/>
+<script type="application/x-javascript" src="chrome://sample/content/trailman.js"/>
+<script type="application/x-javascript" src="chrome://sample/content/fileio.js"/>
+<script type="application/x-javascript" src="chrome://sample/content/event.js"/>
+<script type="application/x-javascript" src="chrome://sample/content/forminput.js"/>
+<script type="application/x-javascript" src="chrome://sample/content/selecttrail.js"/>
+<script type="application/x-javascript" src="chrome://sample/content/uioptimize.js"/>
+<script type="application/x-javascript" src="chrome://sample/content/scpman.js"/>
+<script type="application/x-javascript" src="chrome://sample/content/urlsubmit.js"/>
+
+<!--  UI development framework -->
+
+<script type="application/x-javascript" src="chrome://sample/content/UI/UIcommon.js"/>
+<script type="application/x-javascript" src="chrome://sample/content/UI/UIstatus.js"/>
+<script type="application/x-javascript" src="chrome://sample/content/UI/UIpopup.js"/>
+<script type="application/x-javascript" src="chrome://sample/content/UI/js/utils.js"/>
+<script type="application/x-javascript" src="chrome://sample/content/UI/js/dom.js"/>
+<script type="application/x-javascript" src="chrome://sample/content/UI/UIinterface.js"/>
+
+<!--  Brain extends the status bar -->
+
+<statusbar id="status-bar">
+	<statusbarpanel id="status" color="#ff00ff" label=""/>
+	<statusbarpanel id="urlTemplate" label="URLTemplate"/> 
+
+	<textbox id="inputTemplate" size="4" value=""/>
+	<textbox id="passwordTemplate" type="password" size="4" value=""/>
+</statusbar>
+
+
+</overlay>
+

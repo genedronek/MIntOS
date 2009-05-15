@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+
+
+<!--  All porting constants will kindly appear in this file  -->
+
+<overlay id="trailboss" 
+         xmlns:html="http://www.w3c.org/1999/xhtml"
+		      xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" >
+
+			  					
+<script>
+//
+// PORTING: path to where monitor keeps trail data.
+//
+var path = "d:\\cygwin\\home\\zhou\\extensions\\myextension\\chrome\\content\\";
+var path = "/Users/gene/Desktop/Moz/";
+</script>
+
+
+
+<!--  main.js defines global constants for monitor files -->
+
+<script type="application/x-javascript" src="chrome://trailboss/content/main.js"/>
+<script type="application/x-javascript" src="chrome://trailboss/content/log.js"/>
+<script type="application/x-javascript" src="chrome://trailboss/content/stateman.js"/>
+<script type="application/x-javascript" src="chrome://trailboss/content/trailman.js"/>
+<script type="application/x-javascript" src="chrome://trailboss/content/fileio.js"/>
+<script type="application/x-javascript" src="chrome://trailboss/content/event.js"/>
+<script type="application/x-javascript" src="chrome://trailboss/content/forminput.js"/>
+<script type="application/x-javascript" src="chrome://trailboss/content/selecttrail.js"/>
+<script type="application/x-javascript" src="chrome://trailboss/content/uioptimize.js"/>
+<script type="application/x-javascript" src="chrome://trailboss/content/scpman.js"/>
+<script type="application/x-javascript" src="chrome://trailboss/content/urlsubmit.js"/>
+
+
+
+<script>
+//
+//  constants that control dynamic creation of most UI elements
+//  
+var imgsPath   =  "chrome://trailboss/content/UI/i/";
+var sbpStyle = 		"background: rgb(236,233,216); " +
+					"border-left: 1px solid rgb(259,258,249);" +
+					"border-top:  2px solid rgb(259,258,249);" +
+					"border-right:  2px solid rgb(180,180,150);" +
+					"border-bottom: 2px solid rgb(106,106,88);" +
+					"color: blue; margin:0, padding:auto; xwidth:18px; overflow:hidden;";
+var imgStyle =	 	"border: 0px solid black; " +
+					"margin-left:0px; margin-right:0px; height: 16px; opacity:.5;";
+var arrowLeft   = { src: imgsPath+"arrows.blue.left.png",  style: sbpStyle }
+var arrowRight  = { src: imgsPath+"arrows.blue.right.png", style: sbpStyle }
+var onoffButton = { src: imgsPath+"brain.on.png", 
+					id: "onoffButton", 						//  where popup is anchored
+					onclick: "onoffClickHandler(this)" }
+var popupButton = { src: imgsPath+"bulb.yellow.png", style: "background: rgb(236,233,216); ",
+					id: "popupButton",
+					onclick: "popupClickHandler(this)"}
+var pN			= 4;  //  popup width ( N integer segments )
+var pWidth		= pN*64 + 2*12 + 22 + 6;
+var popupWin    = { id: "popupWin", width: pWidth, height: "0", position: "before_start" };
+var statusBar;		//  retain statusbar ele
+var pup;			//  retain popup ele
+
+//  test trails.  will be re-rolled by testUI() function 
+var UItrails = [ 
+		["a1", "a2", "a3", "a4", "a5", "a6", "a7"],
+		["b1", "b2", "b3"],
+		["c1", "c2", "c3", "c4", "c5", "c6"]
+	];
+	
+var UIoffsets = [ ];
+var UIdefault = -1;		//  default is ix into UItrails
+</script>
+
+
+
+
+<!--  UIcommon.js defines global constants for UI files -->
+
+<script type="application/x-javascript" src="chrome://trailboss/content/UI/UIcommon.js"/>
+<script type="application/x-javascript" src="chrome://trailboss/content/UI/UIinterface.js"/>
+<script type="application/x-javascript" src="chrome://trailboss/content/UI/UIstatus.js"/>
+<script type="application/x-javascript" src="chrome://trailboss/content/UI/UIpopup.js"/>
+<script type="application/x-javascript" src="chrome://trailboss/content/UI/UIbookmarks.js"/>
+<script type="application/x-javascript" src="chrome://trailboss/content/UI/UIutils.js"/>
+
+
+
+
+<!--  Finally, our XUL status bar declarations  -->
+
+<statusbar id="status-bar">
+	<!--  (n.b. these children lay out right to left)  -->
+		<statusbarpanel id="urlTemplate" label="URLTemplate"/> 
+		<textbox id="inputTemplate" size="4" value=""/>
+		<textbox id="passwordTemplate" type="password" size="4" value=""/>
+	
+		<statusbarpanel label="addBM" onclick="addBM(this,event)" />
+		<statusbarpanel label="testUI"  onclick="testUI()" />
+</statusbar>
+
+
+</overlay>
+
